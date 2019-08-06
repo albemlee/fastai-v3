@@ -3,7 +3,7 @@ import asyncio
 import uvicorn
 from fastai import *
 from fastai.vision import *
-# import numpy as np
+import numpy as np
 from io import BytesIO
 from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
@@ -62,6 +62,24 @@ async def analyze(request):
     img_bytes = await (img_data['file'].read())
     img = open_image(BytesIO(img_bytes))
     prediction = learn.predict(img)[0]
+
+    # create dictionary with all prediction scores
+    prediction_probabilities = {
+        'index': [],
+        'class': [],
+        'score': []
+    }
+    for index in range(len(prediction[2])):
+        prediction_probabilities['index'].append(index)
+        prediction_probabilities['class'].append(classes[index])
+        prediction_probabilities['score'].append(float(prediction[2][index]))
+
+    # get top scores and classes
+    top_x_idx = np.argsort(prediction_probabilities['score'])[-x:]
+    top_x = {}
+    for i in top_x_idx:
+        top_x[classes[i]] = prediction_probabilities['score'][i]
+
     return JSONResponse({'result': str(prediction)})
 
 
