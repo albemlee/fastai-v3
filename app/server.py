@@ -3,7 +3,7 @@ import asyncio
 import uvicorn
 from fastai import *
 from fastai.vision import *
-import numpy as np
+# import numpy as np
 from io import BytesIO
 from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddlewa     re
@@ -63,7 +63,7 @@ async def analyze(request):
     img = open_image(BytesIO(img_bytes))
 
     # generate predictions using model (learner)
-    x = 20
+    # x = 20
     prediction = learner.predict(img)
 
     # create dictionary with all prediction scores
