@@ -6,7 +6,7 @@ from fastai.vision import *
 # import numpy as np
 from io import BytesIO
 from starlette.applications import Starlette
-from starlette.middleware.cors import CORSMiddlewa     re
+from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse, JSONResponse
 from starlette.staticfiles import StaticFiles
 
