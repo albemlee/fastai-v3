@@ -3,6 +3,7 @@ import asyncio
 import uvicorn
 from fastai import *
 from fastai.vision import *
+import numpy as np
 from io import BytesIO
 from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddlewa     re
@@ -81,7 +82,7 @@ async def analyze(request):
     top_x = {}
     for i in top_x_idx:
         top_x[classes[i]] = prediction_probabilities['score'][i]
-    return JSONResponse({'result': str(top_x)})
+    return JSONResponse({'result': prediction})
 
 
 if __name__ == '__main__':
