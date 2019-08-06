@@ -83,7 +83,7 @@ async def analyze(request):
     # for i in top_x_idx:
     #     top_x[classes[i]] = prediction_probabilities['score'][i]
 
-    return JSONResponse({'result': prediction})
+    return JSONResponse({'result': str(prediction)})
 
 
 if __name__ == '__main__':
