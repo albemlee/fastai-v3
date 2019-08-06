@@ -67,21 +67,22 @@ async def analyze(request):
     prediction = learner.predict(img)
 
     # create dictionary with all prediction scores
-    prediction_probabilities = {
-        'index': [],
-        'class': [],
-        'score': []
-    }
-    for index in range(len(prediction[2])):
-        prediction_probabilities['index'].append(index)
-        prediction_probabilities['class'].append(classes[index])
-        prediction_probabilities['score'].append(float(prediction[2][index]))
+    # prediction_probabilities = {
+    #     'index': [],
+    #     'class': [],
+    #     'score': []
+    # }
+    # for index in range(len(prediction[2])):
+    #     prediction_probabilities['index'].append(index)
+    #     prediction_probabilities['class'].append(classes[index])
+    #     prediction_probabilities['score'].append(float(prediction[2][index]))
+    #
+    # # get top scores and classes
+    # top_x_idx = np.argsort(prediction_probabilities['score'])[-x:]
+    # top_x = {}
+    # for i in top_x_idx:
+    #     top_x[classes[i]] = prediction_probabilities['score'][i]
 
-    # get top scores and classes
-    top_x_idx = np.argsort(prediction_probabilities['score'])[-x:]
-    top_x = {}
-    for i in top_x_idx:
-        top_x[classes[i]] = prediction_probabilities['score'][i]
     return JSONResponse({'result': prediction})
 
 
