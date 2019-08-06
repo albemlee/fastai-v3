@@ -5,7 +5,7 @@ from fastai import *
 from fastai.vision import *
 from io import BytesIO
 from starlette.applications import Starlette
-from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.cors import CORSMiddlewa     re
 from starlette.responses import HTMLResponse, JSONResponse
 from starlette.staticfiles import StaticFiles
 
@@ -60,7 +60,27 @@ async def analyze(request):
     img_data = await request.form()
     img_bytes = await (img_data['file'].read())
     img = open_image(BytesIO(img_bytes))
-    prediction = learn.predict(img)[0]
+
+    # generate predictions using model (learner)
+    x = 20
+    prediction = learner.predict(img)
+
+    # create dictionary with all prediction scores
+    prediction_probabilities = {
+        'index': [],
+        'class': [],
+        'score': []
+    }
+    for index in range(len(prediction[2])):
+        prediction_probabilities['index'].append(index)
+        prediction_probabilities['class'].append(classes[index])
+        prediction_probabilities['score'].append(float(prediction[2][index]))
+
+    # get top scores and classes
+    top_x_idx = np.argsort(prediction_probabilities['score'])[-x:]
+    top_x = {}
+    for i in top_x_idx:
+        top_x[classes[i]] = prediction_probabilities['score'][i]
     return JSONResponse({'result': str(prediction)})
 
 
