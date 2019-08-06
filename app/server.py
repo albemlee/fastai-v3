@@ -64,7 +64,7 @@ async def analyze(request):
 
     # generate predictions using model (learner)
     # x = 20
-    prediction = learn.predict(img)
+    prediction = learn.predict(img)[0]
 
     # create dictionary with all prediction scores
     # prediction_probabilities = {
