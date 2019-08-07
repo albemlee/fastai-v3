@@ -75,12 +75,13 @@ async def analyze(request):
         prediction_probabilities['score'].append(float(prediction[2][index]))
 
     # get top scores and classes
+    x = 10
     top_x_idx = np.argsort(prediction_probabilities['score'])[-x:]
     top_x = {}
     for i in top_x_idx:
         top_x[classes[i]] = prediction_probabilities['score'][i]
 
-    return JSONResponse({'result': str(prediction)})
+    return JSONResponse({'result': str(top_x)})
 
 
 if __name__ == '__main__':
